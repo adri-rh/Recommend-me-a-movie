@@ -1,4 +1,4 @@
-###### Recommend-me-a-movie
+# Recommend-me-a-movie
 Movie recommendation system based on user data. It helps the user to find new movies based on their preferences.
 
 ### Prerequisites
