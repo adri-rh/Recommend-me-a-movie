@@ -1,13 +1,13 @@
 # Recommend-me-a-movie
 Movie recommendation system based on user data. It helps the user to find new movies based on their preferences.
 
-### Prerequisites
+## Prerequisites
 Make sure you have the following tools installed before getting started:
 
--Python 3.8
--pip (Python package manager)
+- Python 3.8
+- pip (Python package manager)
 
-### Install libraries 
+## Install libraries 
 
 1. Pandas -> ```pip install pandas```
 
