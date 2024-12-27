@@ -10,13 +10,13 @@ Make sure you have the following tools installed before getting started:
 ### Install libraries 
 
 1. Pandas
-   '''pip install pandas'''
+   ```pip install pandas```
 
 2. NumPy
-   '''pip install numpy'''
+   ```pip install numpy```
 
 3. Scikit-learn
-   '''pip install scikit-learn'''
+   ```pip install scikit-learn```
 
 4. Confirm that all libraries are installed
-   '''pip list'''
+   ```pip list```
