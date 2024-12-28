@@ -8,7 +8,7 @@ First, make sure you have installed Git and a Github account. To clone the repos
 git clone https://github.com/adri-rh/Recommend-me-a-movie
 ```
 
-Then, install the project’s dependencies written in requirements.txt. It is highly recommended to work with a virtual environment like virtualenv.
+Then, install the project’s dependencies written in requirements.txt. It is highly recommended to work with a virtual environment like virtualenv. See how it works [here](https://docs.python.org/3/library/venv.html)
 
 ```bash
 pip install -r requirements.txt
