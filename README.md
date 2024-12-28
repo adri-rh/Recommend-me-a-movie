@@ -14,7 +14,7 @@ Then, install the project’s dependencies written in requirements.txt. It is hi
 pip install -r requirements.txt
 ```
 
-After all, you should be able to run Recommend me a movie in a local server. Execute:
+After all, you should be able to run *Recommend me a movie* in a local server. Execute:
 
 ```bash
 python main.py
