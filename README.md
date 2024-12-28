@@ -7,8 +7,8 @@ First, make sure you have installed Git and a Github account. To clone the repos
 git clone https://github.com/adri-rh/Recommend-me-a-movie
 Then, install the project’s dependencies written in requirements.txt. It is highly recommended to work with a virtual environment like virtualenv.
 
-code/pip install -r requirements.txt
+```pip install -r requirements.txt```
 
 After all, you should be able to run Recommend me a movie in a local server. Execute:
 
-code/python main.py
+```python main.py```
