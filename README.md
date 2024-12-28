@@ -1,18 +1,14 @@
 # Recommend-me-a-movie
 Movie recommendation system based on user data. It helps the user to find new movies based on their preferences.
 
-## Prerequisites
-Make sure you have the following tools installed before getting started:
+## Requisites
+First, make sure you have installed Git and a Github account. To clone the repository execute:
 
-- Python 3.8
-- pip (Python package manager)
+git clone https://github.com/adri-rh/Recommend-me-a-movie
+Then, install the project’s dependencies written in requirements.txt. It is highly recommended to work with a virtual environment like virtualenv.
 
-## Install libraries 
+code/pip install -r requirements.txt
 
-1. Pandas -> ```pip install pandas```
+After all, you should be able to run Recommend me a movie in a local server. Execute:
 
-2. NumPy -> ```pip install numpy```
-
-3. Scikit-learn -> ```pip install scikit-learn```
-
-4. Confirm that all libraries are installed -> ```pip list```
+code/python main.py
