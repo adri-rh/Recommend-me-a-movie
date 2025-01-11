@@ -7,10 +7,6 @@ from sklearn.feature_extraction.text import CountVectorizer
 movies = pd.read_csv('data/movies.csv')  #Make sure to change the path to the file
 ratings = pd.read_csv('data/ratings.csv')
 
-#Print the first few rows of the data
-print(movies.head())
-print(ratings.head())
-
 #Merge the data
 movies['combined_features'] = movies['genres'] + " " + movies['title']
 
@@ -40,6 +36,6 @@ def recommend_movies(movie_title, num_recommendations=5):
     return recommended_movies
 
 #Try the system
-movie_to_recommend = "Blue Velvet (1986)"
+movie_to_recommend = "Blade Runner (1982)"
 recommendations = recommend_movies(movie_to_recommend, num_recommendations=5)
 print(f"Recommended movies for {movie_to_recommend}: {recommendations}")
