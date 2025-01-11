@@ -36,6 +36,6 @@ def recommend_movies(movie_title, num_recommendations=5):
     return recommended_movies
 
 #Try the system
-movie_to_recommend = "Blade Runner (1982)"
+movie_to_recommend = "La La Land (2016)"
 recommendations = recommend_movies(movie_to_recommend, num_recommendations=5)
 print(f"Recommended movies for {movie_to_recommend}: {recommendations}")
