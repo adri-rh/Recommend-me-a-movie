@@ -18,6 +18,12 @@ Then, install the project’s dependencies written in requirements.txt. It is hi
 pip install -r requirements.txt
 ```
 
+Now, you will have to configure a `.env` config file. In this file we will append tokens, keys and options that modifies the behaviour of the app. This file cannot be shared with anyone but developers of this project. See how it works [here](https://levelup.gitconnected.com/what-are-env-files-and-how-to-use-them-in-nuxt-7f194f083e3d).
+
+```bash
+TMDB_API_KEY=tmdbsecretkeyexample
+```
+
 After all, you should be able to run *Recommend me a movie*. Execute:
 
 ```bash
