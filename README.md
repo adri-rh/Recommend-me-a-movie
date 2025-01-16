@@ -1,6 +1,10 @@
 # Recommend-me-a-movie
 Movie recommendation system based on user data. It helps the user to find new movies based on their preferences.
 
+### Implementation
+
+This application is being developed with **[Python](https://www.python.org/)** and **[Flask’s](https://flask.palletsprojects.com/en/stable/)** Framework.
+
 ## Requisites
 First, make sure you have installed Git and a Github account. To clone the repository execute:
 
