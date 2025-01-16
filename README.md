@@ -19,3 +19,17 @@ After all, you should be able to run *Recommend me a movie*. Execute:
 ```bash
 python app.py
 ```
+
+If everything is working, you will get:
+```bash
+ * Serving Flask app 'app'
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-807-514
+```
+
+Now you can visit your local server by connecting to `http://127.0.0.1:5000/`
