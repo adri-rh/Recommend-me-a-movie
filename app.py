@@ -15,7 +15,7 @@ app = Flask(__name__)
 
 #Load data and process features
 movies = pd.read_csv('data/movies.csv')
-movies['combined_features'] = movies['genres'] + " " + movies['title']
+movies['combined_features'] = (movies['genres'] + " ") * 3 + movies['title']
 vectorizer = TfidfVectorizer(max_features=5000, stop_words='english')
 feature_matrix = vectorizer.fit_transform(movies['combined_features'])
 cosine_sim = cosine_similarity(feature_matrix)
