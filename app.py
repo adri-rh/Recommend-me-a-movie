@@ -3,30 +3,32 @@ import pandas as pd
 import requests
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+from dotenv import load_dotenv
+import os
 
-# Configure Flask application
+#Load environment variables
+load_dotenv()
+TMDB_API_KEY = os.getenv("TMDB_API_KEY")
+
+#Configure Flask application
 app = Flask(__name__)
 
-# Load data and process features
+#Load data and process features
 movies = pd.read_csv('data/movies.csv')
 movies['combined_features'] = movies['genres'] + " " + movies['title']
 vectorizer = TfidfVectorizer(max_features=5000, stop_words='english')
 feature_matrix = vectorizer.fit_transform(movies['combined_features'])
 cosine_sim = cosine_similarity(feature_matrix)
 
-# TMDB API configuration
-TMDB_API_KEY = "4f9bfdbf145f3000f2ac8ed57a08efe7"
-TMDB_BASE_URL = "https://api.themoviedb.org/3"
-
 def normalize_title(title):
-    """Remove year from the title and normalize it."""
+    #Remove year from the title and normalize it.
     return title.split('(')[0].strip()
 
 def get_movie_poster(title):
-    """Fetch movie poster URL from TMDB API."""
+    #Fetch movie poster URL from TMDB API.
     normalized_title = normalize_title(title)
     params = {"api_key": TMDB_API_KEY, "query": normalized_title}
-    response = requests.get(f"{TMDB_BASE_URL}/search/movie", params=params)
+    response = requests.get(f"https://api.themoviedb.org/3/search/movie", params=params)
     if response.status_code == 200:
         data = response.json()
         if data["results"]:
@@ -35,7 +37,7 @@ def get_movie_poster(title):
                 return f"https://image.tmdb.org/t/p/w500{poster_path}"
     return None
 
-# Recommendation function
+#Recommendation function
 def recommend_movies(movie_title, num_recommendations=5):
     try:
         movie_idx = movies[movies['title'] == movie_title].index[0]
@@ -50,7 +52,7 @@ def recommend_movies(movie_title, num_recommendations=5):
     except IndexError:
         return [{"title": "Movie not found!", "poster": None}]
 
-# Main route
+#Main route
 @app.route("/", methods=["GET", "POST"])
 def index():
     recommendations = []
