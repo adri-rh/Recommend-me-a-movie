@@ -57,21 +57,35 @@ def recommend_movies(movie_title, num_recommendations=5):
 def index():
     recommendations = []
     error_message = ""
-    searched_movie = ""  # Variable para guardar el título buscado
+    searched_movie = ""
+    searched_movie_poster = None
+
     if request.method == "POST":
         movie_title = request.form["movie_title"]
-        searched_movie = movie_title
-        recommendations = recommend_movies(movie_title)
-        if recommendations[0]["title"] == "Movie not found!":
-            error_message = "Movie not found. Please try another title."
-            recommendations = []
-            searched_movie = ""
+        num_recommendations = request.form.get("num_recommendations")
+        
+        #Validate number of recommendations
+        if not num_recommendations or not num_recommendations.isdigit() or int(num_recommendations) < 1 or int(num_recommendations) > 10:
+            error_message = "Please enter a valid number of recommendations (between 1 and 10)."
+        else:
+            num_recommendations = int(num_recommendations)
+            searched_movie = movie_title
+            searched_movie_poster = get_movie_poster(movie_title)
+            recommendations = recommend_movies(movie_title, num_recommendations=num_recommendations)
+            if recommendations[0]["title"] == "Movie not found!":
+                error_message = "Movie not found. Please try another title."
+                recommendations = []
+                searched_movie = ""
+                searched_movie_poster = None
+
     return render_template(
         "index.html",
         recommendations=recommendations,
         error_message=error_message,
         searched_movie=searched_movie,
+        searched_movie_poster=searched_movie_poster,
     )
+
 
 if __name__ == "__main__":
     app.run(debug=True)
