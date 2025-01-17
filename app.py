@@ -48,42 +48,36 @@ def recommend_movies(movie_title, num_recommendations=5):
             title = movies.iloc[idx]['title']
             poster_url = get_movie_poster(title)
             recommendations.append({"title": title, "poster": poster_url})
-        return recommendations
+        #Return recommendations and the searched movie poster
+        searched_movie_poster = get_movie_poster(movie_title)
+        return recommendations, movie_title, searched_movie_poster
     except IndexError:
-        return [{"title": "Movie not found!", "poster": None}]
+        #Return empty recommendations and an error message if the movie is not found
+        return [], None, None
+
 
 #Main route
 @app.route("/", methods=["GET", "POST"])
 def index():
     recommendations = []
-    error_message = ""
-    searched_movie = ""
+    searched_movie = None
     searched_movie_poster = None
-
+    error_message = ""
     if request.method == "POST":
         movie_title = request.form["movie_title"]
-        num_recommendations = request.form.get("num_recommendations")
-        
-        #Validate number of recommendations
-        if not num_recommendations or not num_recommendations.isdigit() or int(num_recommendations) < 1 or int(num_recommendations) > 10:
-            error_message = "Please enter a valid number of recommendations (between 1 and 10)."
+        num_recommendations = request.form.get("num_recommendations", 5)
+        if not num_recommendations or int(num_recommendations) < 1:
+            error_message = "Please enter a valid number of recommendations."
         else:
-            num_recommendations = int(num_recommendations)
-            searched_movie = movie_title
-            searched_movie_poster = get_movie_poster(movie_title)
-            recommendations = recommend_movies(movie_title, num_recommendations=num_recommendations)
-            if recommendations[0]["title"] == "Movie not found!":
-                error_message = "Movie not found. Please try another title."
-                recommendations = []
-                searched_movie = ""
-                searched_movie_poster = None
-
+            recommendations, searched_movie, searched_movie_poster = recommend_movies(movie_title, int(num_recommendations))
+            if not searched_movie:
+                error_message = f"Movie '{movie_title}' not found. Please try another title."
     return render_template(
-        "index.html",
-        recommendations=recommendations,
-        error_message=error_message,
-        searched_movie=searched_movie,
-        searched_movie_poster=searched_movie_poster,
+        "index.html", 
+        recommendations=recommendations, 
+        searched_movie=searched_movie, 
+        searched_movie_poster=searched_movie_poster, 
+        error_message=error_message
     )
 
 
