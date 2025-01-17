@@ -23,6 +23,9 @@
                 </div>
             {% endif %}
             {% if recommendations %}
+                {% if searched_movie %}
+                    <h2 class="text-center mb-4">Recommended movies for "{{ searched_movie }}"</h2>
+                {% endif %}
                 <div class="row">
                     {% for movie in recommendations %}
                     <div class="col-md-4">
