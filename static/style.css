@@ -142,3 +142,17 @@ body {
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
+
+.columns {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.column {
+    width: 50px;
+    background-color: rgba(0, 0, 0, 0.7);
+    background-size: cover;
+    border-radius: 5px;
+    height: calc(100vh - 40px);
+}

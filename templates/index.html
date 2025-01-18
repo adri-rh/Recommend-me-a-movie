@@ -8,61 +8,68 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <!-- Main content area -->
-    <div class="main-content">
-        <div class="container py-5">
-            <h1 class="text-center mb-4">🎥 Movie Recommendation System</h1>
-            <div class="card p-4 shadow">
-                <!-- Form for user input -->
-                <form method="POST" class="mb-4">
-                    <div class="mb-3">
-                        <label for="movie_title" class="form-label">Enter a movie title:</label>
-                        <input type="text" id="movie_title" name="movie_title" class="form-control" placeholder="e.g., Midnight Cowboy (1969)" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="num_recommendations" class="form-label">Number of recommendations:</label>
-                        <input type="number" id="num_recommendations" name="num_recommendations" class="form-control" min="1" max="10" placeholder="e.g., 5">
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Get Recommendations</button>
-                </form>
+    <div class="columns">
+        <!-- Left decorative column -->
+        <div class="column"></div>
 
-                <!-- Error Message -->
-                {% if error_message %}
-                    <div class="alert alert-danger" role="alert">
-                        {{ error_message }}
-                    </div>
-                {% endif %}
+        <!-- Main content area -->
+        <div class="main-content">
+            <div class="container py-5">
+                <h1 class="text-center mb-4">🎥 Movie Recommendation System</h1>
+                <div class="card p-4 shadow">
+                    <!-- Form for user input -->
+                    <form method="POST" class="mb-4">
+                        <div class="mb-3">
+                            <label for="movie_title" class="form-label">Enter a movie title:</label>
+                            <input type="text" id="movie_title" name="movie_title" class="form-control" placeholder="e.g., Midnight Cowboy (1969)" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="num_recommendations" class="form-label">Number of recommendations:</label>
+                            <input type="number" id="num_recommendations" name="num_recommendations" class="form-control" min="1" max="10" placeholder="e.g., 5">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Get Recommendations</button>
+                    </form>
 
-                <!-- Searched Movie Section -->
-                {% if searched_movie and searched_movie_poster %}
-                    <div class="searched-movie text-center mb-4">
-                        <h3>Recommended movies for {{ searched_movie }}</h3>
-                        <img src="{{ searched_movie_poster }}" class="searched-poster" alt="Movie Poster" data-bs-toggle="modal" data-bs-target="#searchedPosterModal">
-                    </div>
-                {% endif %}
+                    <!-- Error Message -->
+                    {% if error_message %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ error_message }}
+                        </div>
+                    {% endif %}
 
-                <!-- Recommendations Section -->
-                {% if recommendations %}
-                    <div class="row">
-                        {% for movie in recommendations %}
-                        <div class="col-md-4">
-                            <div class="card mb-4 shadow-sm">
-                                {% if movie.poster %}
-                                <img src="{{ movie.poster }}" class="card-img-top poster-thumbnail" alt="Movie Poster" data-bs-toggle="modal" data-bs-target="#posterModal" data-poster="{{ movie.poster }}">
-                                {% else %}
-                                <img src="https://via.placeholder.com/150" class="card-img-top poster-thumbnail" alt="No Poster Available">
-                                {% endif %}
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ movie.title }}</h5>
+                    <!-- Searched Movie Section -->
+                    {% if searched_movie and searched_movie_poster %}
+                        <div class="searched-movie text-center mb-4">
+                            <h3>Recommended movies for {{ searched_movie }}</h3>
+                            <img src="{{ searched_movie_poster }}" class="searched-poster" alt="Movie Poster" data-bs-toggle="modal" data-bs-target="#searchedPosterModal">
+                        </div>
+                    {% endif %}
+
+                    <!-- Recommendations Section -->
+                    {% if recommendations %}
+                        <div class="row">
+                            {% for movie in recommendations %}
+                            <div class="col-md-4">
+                                <div class="card mb-4 shadow-sm">
+                                    {% if movie.poster %}
+                                    <img src="{{ movie.poster }}" class="card-img-top poster-thumbnail" alt="Movie Poster" data-bs-toggle="modal" data-bs-target="#posterModal" data-poster="{{ movie.poster }}">
+                                    {% else %}
+                                    <img src="https://via.placeholder.com/150" class="card-img-top poster-thumbnail" alt="No Poster Available">
+                                    {% endif %}
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ movie.title }}</h5>
+                                    </div>
                                 </div>
                             </div>
+                            {% endfor %}
                         </div>
-                        {% endfor %}
-                    </div>
-                {% endif %}
+                    {% endif %}
+                </div>
             </div>
         </div>
-    </div>
+
+        <!-- Right decorative column -->
+        <div class="column"></div>
     </div>
 
     <!-- Poster Modal -->
