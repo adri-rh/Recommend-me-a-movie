@@ -6,6 +6,24 @@
     <title>Movie Recommender</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .autocomplete-suggestions {
+            border: 1px solid #ccc;
+            background: #fff;
+            max-height: 200px;
+            overflow-y: auto;
+            position: absolute;
+            z-index: 1000;
+            width: 100%;
+        }
+        .autocomplete-suggestion {
+            padding: 8px;
+            cursor: pointer;
+        }
+        .autocomplete-suggestion:hover {
+            background: #f0f0f0;
+        }
+    </style>
 </head>
 <body>
     <div class="columns">
@@ -19,9 +37,10 @@
                 <div class="card p-4 shadow">
                     <!-- Form for user input -->
                     <form method="POST" class="mb-4">
-                        <div class="mb-3">
+                        <div class="mb-3 position-relative">
                             <label for="movie_title" class="form-label">Enter a movie title:</label>
-                            <input type="text" id="movie_title" name="movie_title" class="form-control" placeholder="e.g., Midnight Cowboy (1969)" required>
+                            <input type="text" id="movie_title" name="movie_title" class="form-control" placeholder="e.g., Midnight Cowboy (1969)" required autocomplete="off">
+                            <div id="autocomplete-list" class="autocomplete-suggestions"></div>
                         </div>
                         <div class="mb-3">
                             <label for="num_recommendations" class="form-label">Number of recommendations:</label>
@@ -96,13 +115,48 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Handle poster click to show full image in modal
+        const movieTitleInput = document.getElementById('movie_title');
+        const autocompleteList = document.getElementById('autocomplete-list');
+
+        movieTitleInput.addEventListener('input', function () {
+            const query = this.value;
+
+            if (query.length < 2) {
+                autocompleteList.innerHTML = '';
+                return;
+            }
+
+            fetch(`/autocomplete?query=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    autocompleteList.innerHTML = '';
+                    data.forEach(item => {
+                        const suggestion = document.createElement('div');
+                        suggestion.classList.add('autocomplete-suggestion');
+                        suggestion.textContent = item;
+                        suggestion.addEventListener('click', () => {
+                            movieTitleInput.value = item;
+                            autocompleteList.innerHTML = '';
+                        });
+                        autocompleteList.appendChild(suggestion);
+                    });
+                })
+                .catch(err => console.error('Autocomplete fetch error:', err));
+        });
+
+        document.addEventListener('click', function (e) {
+            if (!movieTitleInput.contains(e.target)) {
+                autocompleteList.innerHTML = '';
+            }
+        });
+
         document.querySelectorAll('.poster-thumbnail').forEach(img => {
             img.addEventListener('click', function () {
                 const modalPoster = document.getElementById('modalPoster');
                 modalPoster.src = this.dataset.poster;
             });
         });
+
     </script>
 
     <footer class="bg-dark text-white py-4">
