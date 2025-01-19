@@ -6,14 +6,14 @@ from sklearn.metrics.pairwise import cosine_similarity
 from dotenv import load_dotenv
 import os
 
-# Load environment variables
+#Load environment variables
 load_dotenv()
 TMDB_API_KEY = os.getenv("TMDB_API_KEY")
 
-# Configure Flask application
+#Configure Flask application
 app = Flask(__name__)
 
-# Load data and process features
+#Load data and process features
 movies = pd.read_csv('data/movies.csv')
 movies['combined_features'] = (movies['genres'] + " ") * 3 + movies['title']
 vectorizer = TfidfVectorizer(max_features=5000, stop_words='english')
@@ -21,11 +21,11 @@ feature_matrix = vectorizer.fit_transform(movies['combined_features'])
 cosine_sim = cosine_similarity(feature_matrix)
 
 def normalize_title(title):
-    # Remove year from the title and normalize it
+    #Remove year from the title and normalize it
     return title.split('(')[0].strip()
 
 def get_movie_poster(title):
-    # Fetch movie poster URL from TMDB API
+    #Fetch movie poster URL from TMDB API
     normalized_title = normalize_title(title)
     params = {"api_key": TMDB_API_KEY, "query": normalized_title}
     response = requests.get(f"https://api.themoviedb.org/3/search/movie", params=params)
@@ -37,7 +37,7 @@ def get_movie_poster(title):
                 return f"https://image.tmdb.org/t/p/w500{poster_path}"
     return None
 
-# Recommendation function
+#Recommendation function
 def recommend_movies(movie_title, num_recommendations=5):
     try:
         movie_idx = movies[movies['title'] == movie_title].index[0]
@@ -48,11 +48,11 @@ def recommend_movies(movie_title, num_recommendations=5):
             title = movies.iloc[idx]['title']
             poster_url = get_movie_poster(title)
             recommendations.append({"title": title, "poster": poster_url})
-        # Return recommendations and the searched movie poster
+        #Return recommendations and the searched movie poster
         searched_movie_poster = get_movie_poster(movie_title)
         return recommendations, movie_title, searched_movie_poster
     except IndexError:
-        # Return empty recommendations and an error message if the movie is not found
+        #Return empty recommendations and an error message if the movie is not found
         return [], None, None
 
 # Main route
@@ -79,13 +79,13 @@ def index():
         error_message=error_message
     )
 
-# Autocomplete endpoint
+#Autocomplete endpoint
 @app.route('/autocomplete', methods=['GET'])
 def autocomplete():
     query = request.args.get('query', '').lower()
     if query:
         suggestions = [movie for movie in movies['title'] if query in movie.lower()]
-        return jsonify(suggestions[:5])  # Return top 5 suggestions
+        return jsonify(suggestions[:5])
     return jsonify([])
 
 if __name__ == "__main__":
